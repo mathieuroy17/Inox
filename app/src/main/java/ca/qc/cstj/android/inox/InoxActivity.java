@@ -25,8 +25,10 @@ import ca.qc.cstj.android.inox.models.Rune;
 
 public class InoxActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        RuneFragment.OnFragmentInteractionListener
-        /*TroopFragment.OnFragmentInteractionListener,*/{
+        RuneFragment.OnFragmentInteractionListener,
+        TroopFragment.OnFragmentInteractionListener,
+        ConnexionFragment.OnFragmentInteractionListener,
+        CreationDeCompteFragment.OnFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
