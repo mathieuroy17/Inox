@@ -3,8 +3,6 @@ package ca.qc.cstj.android.inox.adapters;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 
 import ca.qc.cstj.android.inox.models.Rune;

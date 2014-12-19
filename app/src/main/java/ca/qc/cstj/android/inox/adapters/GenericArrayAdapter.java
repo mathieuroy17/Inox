@@ -6,14 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.google.gson.JsonObject;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
-import ca.qc.cstj.android.inox.R;
 
 /**
  * Created by Ycharron on 2014-10-24.
