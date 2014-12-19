@@ -10,22 +10,15 @@ import org.json.JSONObject;
 public class Rune {
     private String href;
     private String type;
-
-
-
+    private int nbrRune;
 
     public Rune(JsonObject jsonObject) {
         if(jsonObject.has("href")) {
             href = jsonObject.getAsJsonPrimitive("href").getAsString();
         }
-        if(jsonObject.has("type")) {
+        /*if(jsonObject.has("type")) {
             type = jsonObject.getAsJsonPrimitive("type").getAsString();
-        }
-
-
-        //dois être un array
-        //Commentaire = new Commentaire(jsonObject.getAsJsonObject("commentaire"));
-
+        }*/
     }
 
     public String getHref() {

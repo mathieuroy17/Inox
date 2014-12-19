@@ -4,5 +4,19 @@
     <string name="app_name">Inox</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_section1">Liste Troop</string>
+    <string name="title_section2">Liste Runes</string>
+    <string name="title_section3">Explorer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="Connexion">Connexion</string>
+    <string name="CréationDeCompte">Creation d\'un compte</string>
+    <string name="Utilisateur">Entrer votre nom d\'utilisateur</string>
+    <string name="MotDePasse">Entrer votre mot de passe</string>
+    <string name="MotDePasseConfirmation">Entrer à nouveau votre mot de passe</string>
+    <string name="Nom">Entrer votre nom</string>
+    <string name="Créer">Créer</string>
+    <string name="Annuler">Annuler</string>
 
 </resources>

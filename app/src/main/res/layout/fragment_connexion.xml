@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.qc.cstj.android.inox.ConnexionFragment">
+
+    <EditText
+        android:id="@+id/Utilisateur"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:hint="@string/Utilisateur" />
+
+    <EditText
+        android:id="@+id/motDePasse"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="140dp"
+        android:hint="@string/MotDePasse"/>
+
+    <EditText
+        android:id="@+id/motDePasseConfirmation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="210dp"
+        android:hint="@string/MotDePasseConfirmation"/>
+
+    <Button
+        android:id="@+id/buttonCréationDeCompte"
+        android:layout_height="60dp"
+        android:layout_width="200dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="200dp"
+        android:text="@string/CréationDeCompte"/>
+
+    <Button
+        android:id="@+id/buttonConnexion"
+        android:layout_height="60dp"
+        android:layout_width="200dp"
+        android:layout_marginTop="350dp"
+        android:text="@string/Connexion" />
+
+</FrameLayout>
