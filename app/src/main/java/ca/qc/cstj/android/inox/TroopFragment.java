@@ -105,7 +105,7 @@ public class TroopFragment extends Fragment {
     private void loadTroops() {
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("En Chargement");
+        progressDialog.setMessage("Chargement des troops");
         progressDialog.setIndeterminate(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 

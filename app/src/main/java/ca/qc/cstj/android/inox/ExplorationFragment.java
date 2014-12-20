@@ -105,7 +105,7 @@ public class ExplorationFragment extends Fragment {
     private void loadExplorations() {
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("En Chargement");
+        progressDialog.setMessage("Chargement des explorations");
         progressDialog.setIndeterminate(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 

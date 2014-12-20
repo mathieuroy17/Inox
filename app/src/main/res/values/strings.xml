@@ -19,5 +19,9 @@
     <string name="Nom">Entrer votre nom</string>
     <string name="Créer">Créer</string>
     <string name="Annuler">Annuler</string>
+    <string name="Depart">Depart de l\'exploration</string>
+    <string name="Arriver">Arriver de l\'exploration</string>
+    <string name="date">Date de l\'exploration</string>
+    <string name="Exploration">Voici les détails de l\'exploration</string>
 
 </resources>

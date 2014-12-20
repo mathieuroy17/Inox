@@ -93,7 +93,7 @@ public class RuneFragment extends Fragment {
         private void loadRunes() {
 
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("En Chargement");
+            progressDialog.setMessage("Chargement des runes");
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 

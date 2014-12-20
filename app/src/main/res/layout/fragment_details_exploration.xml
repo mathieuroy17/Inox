@@ -7,7 +7,36 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_height="50dp"
+        android:text="@string/Exploration"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/Depart"
+        android:layout_marginTop="50dp"/>
+    <TextView
+        android:id="@+id/rows_depart"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/Arriver"
+        android:layout_marginTop="150dp"/>
+    <TextView
+        android:id="@+id/rows_arriver"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/date"
+        android:layout_marginTop="250dp"/>
+    <TextView
+        android:id="@+id/rows_date"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="300dp"/>
 </FrameLayout>

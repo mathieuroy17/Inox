@@ -30,6 +30,8 @@ public class InoxActivity extends Activity
         RuneFragment.OnFragmentInteractionListener,
         TroopFragment.OnFragmentInteractionListener,
         ExplorationFragment.OnFragmentInteractionListener,
+        DetailsExplorationFragment.OnFragmentInteractionListener,
+        DetailsTroopFragment.OnFragmentInteractionListener,
         ConnexionFragment.OnFragmentInteractionListener,
         CreationDeCompteFragment.OnFragmentInteractionListener{
 
