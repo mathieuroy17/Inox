@@ -4,9 +4,9 @@ package ca.qc.cstj.android.inox.models;
  * Created by Mathieu on 2014-12-19.
  */
 public class UtilisateurConnecter {
-    private static String token;
-    private static String nom;
-    private static int expiration;
+    private static String token ="";
+    private static String nom="";
+    private static int expiration=0;
 
     public static String getToken() {
         return token;

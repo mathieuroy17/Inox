@@ -27,6 +27,7 @@ import java.util.Objects;
 
 import ca.qc.cstj.android.inox.adapters.RuneAdapter;
 import ca.qc.cstj.android.inox.models.Rune;
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
@@ -97,11 +98,11 @@ public class RuneFragment extends Fragment {
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-            String tmp = new String();
-            tmp = ServicesURI.RUNES_SERVICE_URI+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+            StringBuilder href = new StringBuilder();
+            href.append(ServicesURI.RUNES_SERVICE_URI).append("?token=").append(UtilisateurConnecter.getToken());
 
             Ion.with(getActivity())
-                    .load(tmp)
+                    .load(href.toString())
                     .progressDialog(progressDialog)
                     .asJsonObject()
                     .withResponse()

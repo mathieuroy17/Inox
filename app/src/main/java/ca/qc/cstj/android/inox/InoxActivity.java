@@ -23,6 +23,7 @@ import ca.qc.cstj.android.inox.RuneFragment;
 import ca.qc.cstj.android.inox.adapters.ExplorationAdapter;
 import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.Rune;
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 
 
 public class InoxActivity extends Activity
@@ -65,33 +66,36 @@ public class InoxActivity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, ConnexionFragment.newInstance(0))
-                .commit();
-
-       /* switch(position) {
-            case 0:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, TroopFragment.newInstance(0))
-                        .commit();
-                break;
-            case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, RuneFragment.newInstance(1))
-                        .commit();
-                break;
-            case 2:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ExplorationFragment.newInstance(2))
-                        .commit();
-                break;*/
-           /* case  4:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ExplorerFragment.newInstance(4))
-                        .commit();
-                break;*/
-       // }
-
+        if(UtilisateurConnecter.getNom() == "") {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ConnexionFragment.newInstance(0))
+                    .commit();
+        }
+        else
+        {
+            switch (position) {
+                case 0:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, TroopFragment.newInstance(0))
+                            .commit();
+                    break;
+                case 1:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, RuneFragment.newInstance(1))
+                            .commit();
+                    break;
+                case 2:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, ExplorationFragment.newInstance(2))
+                            .commit();
+                    break;
+               /* case  4:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, ExplorerFragment.newInstance(4))
+                            .commit();
+                    break;*/
+            }
+        }
     }
 
     public void onSectionAttached(int number) {

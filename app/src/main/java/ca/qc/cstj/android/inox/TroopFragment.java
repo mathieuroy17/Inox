@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import ca.qc.cstj.android.inox.adapters.TroopAdapter;
 import ca.qc.cstj.android.inox.models.Troop;
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
@@ -109,11 +110,11 @@ public class TroopFragment extends Fragment {
         progressDialog.setIndeterminate(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        String tmp = new String();
-        tmp = ServicesURI.TROOPS_SERVICE_URI+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+        StringBuilder href = new StringBuilder();
+        href.append(ServicesURI.TROOPS_SERVICE_URI).append("?token=").append(UtilisateurConnecter.getToken());
 
         Ion.with(getActivity())
-                .load(tmp)
+                .load(href.toString())
                 .progressDialog(progressDialog)
                 .asJsonArray()
                 .withResponse()

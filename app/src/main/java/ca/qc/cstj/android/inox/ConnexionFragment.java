@@ -123,11 +123,11 @@ public class ConnexionFragment extends Fragment {
                         .setCallback(new FutureCallback<Response<JsonObject>>()
                         {
                             @Override
-                            public void onCompleted(Exception e, Response<JsonObject> Responce)
+                            public void onCompleted(Exception e, Response<JsonObject> Response)
                             {
 
-                                if (Responce.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
-                                    JsonObject jsonObject=Responce.getResult();
+                                if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                                    JsonObject jsonObject=Response.getResult();
 
                                     UtilisateurConnecter.setToken(jsonObject.getAsJsonPrimitive("token").getAsString());
                                     UtilisateurConnecter.setNom(jsonObject.getAsJsonPrimitive("user").getAsString());

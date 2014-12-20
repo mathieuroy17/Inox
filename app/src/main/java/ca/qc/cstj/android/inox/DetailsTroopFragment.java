@@ -20,6 +20,8 @@ import org.apache.http.HttpStatus;
 
 import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.Troop;
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -83,21 +85,20 @@ public class DetailsTroopFragment extends Fragment {
         progressDialog.setIndeterminate(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        String tmp = new String();
-        tmp = mHref+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
-
+        StringBuilder href = new StringBuilder();
+        href.append(mHref).append("?token=").append(UtilisateurConnecter.getToken());
 
         Ion.with(getActivity())
-                .load(tmp)
+                .load(href.toString())
                 .progressDialog(progressDialog)
                 .asJsonObject()
                 .withResponse()
                 .setCallback(new FutureCallback<Response<JsonObject>>() {
                     @Override
-                    public void onCompleted(Exception e, Response<JsonObject> Responce) {
+                    public void onCompleted(Exception e, Response<JsonObject> Response) {
 
-                        if (Responce.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
-                            Troop troop = new Troop(Responce.getResult());
+                        if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                            Troop troop = new Troop(Response.getResult());
 
                             ImageView imgTroop = (ImageView) viewlive.findViewById(R.id.imgTroop);
 
