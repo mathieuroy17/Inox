@@ -81,7 +81,7 @@ public class ConnexionFragment extends Fragment {
     {
         super.onStart();
 
-        final Button creation = (Button)getActivity().findViewById(R.id.buttonCréationDeCompte);
+        final Button creation = (Button)getActivity().findViewById(R.id.buttonCreationDeCompte);
         creation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -104,11 +104,11 @@ public class ConnexionFragment extends Fragment {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
                 //Trouve les informations
-                final EditText editText = (EditText)getActivity().findViewById(R.id.utilisateur);
-                final String nom = editText.getText().toString();
+                final EditText TextUtilisateur = (EditText)getActivity().findViewById(R.id.utilisateur);
+                final String nom = TextUtilisateur.getText().toString();
 
-                final EditText textPseudo = (EditText)getActivity().findViewById(R.id.motDePasse);
-                String password = textPseudo.getText().toString();
+                final EditText TextPassword = (EditText)getActivity().findViewById(R.id.motDePasse);
+                String password = TextPassword.getText().toString();
 
                 StringBuilder href = new StringBuilder();
                 href.append(ServicesURI.EXPLORATEURS_SERVICE_URI).append("?utilisateur=").append(nom).append("&password=").append(password);

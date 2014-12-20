@@ -2,6 +2,7 @@ package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -76,6 +88,77 @@ public class CreationDeCompteFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ConnexionFragment.newInstance(0))
                         .commit();
+            }
+        });
+
+        final Button creation = (Button)getActivity().findViewById(R.id.buttonCreer);
+        creation.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Connexion en cours");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                //Trouve les informations
+                final EditText TextNom = (EditText)getActivity().findViewById(R.id.nom);
+                final String nom = TextNom.getText().toString();
+
+                final EditText TextUtilisateur = (EditText)getActivity().findViewById(R.id.creationUtilisateur);
+                final String utilisateur = TextUtilisateur.getText().toString();
+
+                final EditText textPassword= (EditText)getActivity().findViewById(R.id.creationMotDePasse);
+                String password = textPassword.getText().toString();
+
+                final EditText textConfirmPassword = (EditText)getActivity().findViewById(R.id.creationMotDePasse);
+                String confirmPassword = textConfirmPassword.getText().toString();
+
+                if(password.equals(confirmPassword))
+                {
+
+                    JsonObject json = new JsonObject();
+
+                    json.addProperty("nom", nom);
+                    json.addProperty("utilisateur", utilisateur);
+                    json.addProperty("password", password);
+
+
+                    Ion.with(getActivity())
+                            .load(ServicesURI.EXPLORATEURS_SERVICE_URI)
+                            .progressDialog(progressDialog)
+                            .setHeader("Content-Type", "application/json")
+                            .setJsonObjectBody(json)
+                            .asJsonObject()
+                            .withResponse()
+                            .setCallback(new FutureCallback<Response<JsonObject>>()
+                            {
+                                @Override
+                                public void onCompleted(Exception e, Response<JsonObject> Response)
+                                {
+
+                                    if (Response.getHeaders().getResponseCode() == HttpStatus.SC_CREATED)
+                                    {
+                                        JsonObject jsonObject = Response.getResult();
+
+                                        UtilisateurConnecter.setToken(jsonObject.getAsJsonPrimitive("token").getAsString());
+                                        UtilisateurConnecter.setNom(jsonObject.getAsJsonPrimitive("user").getAsString());
+                                        UtilisateurConnecter.setExpiration(jsonObject.getAsJsonPrimitive("expires").getAsInt());
+
+                                        FragmentManager fragmentManager = getFragmentManager();
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.container, RuneFragment.newInstance(0))
+                                                .commit();
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+                            });
+                }
             }
         });
     }
