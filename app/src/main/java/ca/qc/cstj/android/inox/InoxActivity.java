@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import ca.qc.cstj.android.inox.RuneFragment;
+import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.Rune;
 
 
@@ -59,14 +60,28 @@ public class InoxActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        /*if(position ==0)
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, TroopFragment.newInstance(position))
-                    .commit();*/
-       // else
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, RuneFragment.newInstance(position))
-                    .commit();
+        switch(position) {
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TroopFragment.newInstance(1))
+                        .commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, RuneFragment.newInstance(2))
+                        .commit();
+                break;
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ExplorationFragment.newInstance(3))
+                        .commit();
+                break;
+           /* case  4:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ExplorerFragment.newInstance(4))
+                        .commit();
+                break;*/
+        }
 
     }
 
@@ -77,6 +92,12 @@ public class InoxActivity extends Activity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_section3);
+                break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
                 break;
         }
     }
