@@ -6,20 +6,20 @@
 
 
     <EditText
-        android:id="@+id/Nom"
+        android:id="@+id/nom"
         android:layout_height="70dp"
         android:layout_width="match_parent"
         android:hint="@string/Nom" />
 
     <EditText
-        android:id="@id/Utilisateur"
+        android:id="@+id/creationUtilisateur"
         android:layout_height="70dp"
         android:layout_width="match_parent"
         android:layout_marginTop="70dp"
         android:hint="@string/Utilisateur" />
 
     <EditText
-        android:id="@id/motDePasse"
+        android:id="@+id/creationMotDePasse"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="140dp"

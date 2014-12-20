@@ -7,7 +7,33 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:text="@string/troop"/>
+    <ImageView
+        android:id="@+id/imgTroop"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/name"
+        android:layout_marginTop="150dp"/>
+    <TextView
+        android:id="@+id/rows_nom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/stat"
+        android:layout_marginTop="250dp"/>
+    <TextView
+        android:id="@+id/rows_stat"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="300dp"/>
 
 </FrameLayout>

@@ -23,5 +23,8 @@
     <string name="Arriver">Arriver de l\'exploration</string>
     <string name="date">Date de l\'exploration</string>
     <string name="Exploration">Voici les détails de l\'exploration</string>
+    <string name="troop">Détails d\'une troop</string>
+    <string name="name">Nom de la troop</string>
+    <string name="stat">Statistique d\'une troop</string>
 
 </resources>

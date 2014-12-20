@@ -1,13 +1,25 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import ca.qc.cstj.android.inox.models.Exploration;
+import ca.qc.cstj.android.inox.models.Troop;
 
 
 /**
@@ -59,9 +71,62 @@ public class DetailsTroopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details_troop, container, false);
+        final View viewlive =  inflater.inflate(R.layout.fragment_details_troop,container, false);
+        loadTroop(viewlive);
+
+        return  viewlive;
     }
 
+    private void loadTroop(final View viewlive) {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Chargement d'une troop");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        String tmp = new String();
+        tmp = mHref+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+
+
+        Ion.with(getActivity())
+                .load(tmp)
+                .progressDialog(progressDialog)
+                .asJsonObject()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonObject>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonObject> Responce) {
+
+                        if (Responce.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                            Troop troop = new Troop(Responce.getResult());
+
+                            ImageView imgTroop = (ImageView) viewlive.findViewById(R.id.imgTroop);
+
+                            //ION
+                            Ion.with(imgTroop)
+                                    .placeholder(R.drawable.spinner_white_76)
+                                    .error(R.drawable.error_48)
+                                    .load(troop.getImageUrl());
+
+                            TextView name = (TextView) viewlive.findViewById(R.id.rows_nom);
+                            name.setText(troop.getName());
+
+                            StringBuilder SB = new StringBuilder();
+
+                            SB.append("Attaque :").append(troop.getAttack()).append("\n").append("Defense :").append(troop.getDefense())
+                               .append("\n").append("Vitesse :").append(troop.getSpeed());
+
+                            TextView statistique = (TextView) viewlive.findViewById(R.id.rows_stat);
+                            statistique.setText(SB.toString());
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                });
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
