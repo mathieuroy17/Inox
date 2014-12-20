@@ -10,7 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+
+import ca.qc.cstj.android.inox.adapters.RuneAdapter;
 import ca.qc.cstj.android.inox.adapters.TroopAdapter;
+import ca.qc.cstj.android.inox.models.Rune;
+import ca.qc.cstj.android.inox.models.Troop;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -66,6 +81,56 @@ public class TroopFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_troop, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        lstTroop= (ListView) getActivity().findViewById(R.id.list_troop);
+        loadTroops();
+    }
+
+    private void loadTroops() {
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("En Chargement");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        String tmp = new String();
+        tmp = ServicesURI.TROOPS_SERVICE_URI+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+
+        Ion.with(getActivity())
+                .load(tmp)
+                .progressDialog(progressDialog)
+                .asJsonArray()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonArray> response) {
+
+                        if(response.getHeaders().getResponseCode() == HttpStatus.SC_OK)
+                        {
+                            JsonArray jsonArray= response.getResult();
+                            ArrayList<Troop> troops = new ArrayList<Troop>();
+
+                            for (JsonElement element : jsonArray) {
+
+                                troops.add(new Troop(element.getAsJsonObject()));
+                            }
+
+                            troopAdapter = new TroopAdapter(getActivity(),getActivity().getLayoutInflater(),troops);
+                            lstTroop.setAdapter(troopAdapter);
+                        }
+                        else{
+                            //erreur 404
+                        }
+
+                    }
+                });
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

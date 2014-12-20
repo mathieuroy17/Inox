@@ -61,19 +61,19 @@ public class InoxActivity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         switch(position) {
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TroopFragment.newInstance(0))
+                        .commit();
+                break;
             case 1:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, TroopFragment.newInstance(1))
+                        .replace(R.id.container, RuneFragment.newInstance(1))
                         .commit();
                 break;
             case 2:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, RuneFragment.newInstance(2))
-                        .commit();
-                break;
-            case 3:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ExplorationFragment.newInstance(3))
+                        .replace(R.id.container, ExplorationFragment.newInstance(2))
                         .commit();
                 break;
            /* case  4:
