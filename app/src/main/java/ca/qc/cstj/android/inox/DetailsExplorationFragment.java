@@ -116,6 +116,10 @@ public class DetailsExplorationFragment extends Fragment {
                             TextView date = (TextView) viewlive.findViewById(R.id.rows_date);
                             date.setText(exploration.getDateExploration().toString());
                         }
+                        else
+                        {
+
+                        }
                     }
                 });
 
