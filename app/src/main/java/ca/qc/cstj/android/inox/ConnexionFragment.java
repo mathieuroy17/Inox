@@ -35,7 +35,7 @@ import ca.qc.cstj.android.inox.services.ServicesURI;
 public class ConnexionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "section_number";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,8 +81,22 @@ public class ConnexionFragment extends Fragment {
     {
         super.onStart();
 
-        final Button button = (Button)getActivity().findViewById(R.id.buttonConnexion);
-        button.setOnClickListener(new View.OnClickListener()
+
+
+        final Button creation = (Button)getActivity().findViewById(R.id.buttonCréationDeCompte);
+        creation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, CreationDeCompteFragment.newInstance(0))
+                        .commit();
+
+            }
+        });
+
+        final Button connexion = (Button)getActivity().findViewById(R.id.buttonConnexion);
+        connexion.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
