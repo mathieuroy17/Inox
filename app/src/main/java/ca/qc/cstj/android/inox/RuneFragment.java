@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
@@ -22,12 +23,12 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ca.qc.cstj.android.inox.adapters.RuneAdapter;
 import ca.qc.cstj.android.inox.models.Rune;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
-    import ca.qc.cstj.android.inox.adapters.RuneAdapter;
 
 
 public class RuneFragment extends Fragment {
@@ -87,19 +88,6 @@ public class RuneFragment extends Fragment {
 
             lstRune = (ListView) getActivity().findViewById(R.id.list_runes);
             loadRunes();
-
-            lstRune.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    String href = runeAdapter.getItem(position).getHref();
-
-
-                }
-            });
-
-
-
         }
 
         private void loadRunes() {
@@ -109,26 +97,41 @@ public class RuneFragment extends Fragment {
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
+            String tmp = new String();
+            tmp = ServicesURI.RUNES_SERVICE_URI+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+
             Ion.with(getActivity())
-                    .load(ServicesURI.RUNES_SERVICE_URI)
+                    .load(tmp)
                     .progressDialog(progressDialog)
-                    .asJsonArray()
+                    .asJsonObject()
                     .withResponse()
-                    .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    .setCallback(new FutureCallback<Response<JsonObject>>() {
                         @Override
-                        public void onCompleted(Exception e, Response<JsonArray> response) {
+                        public void onCompleted(Exception e, Response<JsonObject> response) {
 
                             if(response.getHeaders().getResponseCode() == HttpStatus.SC_OK)
                             {
-                                JsonArray jsonArray = response.getResult();
+                                JsonObject JsonObject= response.getResult();
                                 ArrayList<Rune> runes = new ArrayList<Rune>();
 
-                                for(JsonElement element : jsonArray)
+                                int size= JsonObject.entrySet().size();
+                                Object object[]= JsonObject.entrySet().toArray();
+
+                               for(int i=0;i<size;i++)
                                 {
-                                    runes.add(new Rune(element.getAsJsonObject()));
+                                    Rune rune = new Rune();
+                                    String tmp= object[i].toString();
+                                    int index =tmp.indexOf("=");
+                                    String type = tmp.substring(0,index);
+                                    int nbrRune = Integer.parseInt(tmp.substring(index+1,tmp.length()));
+
+                                    rune.setType(type);
+                                    rune.setNbrRune(nbrRune);
+                                    runes.add(rune);
+
                                 }
 
-                                runeAdapter = new RuneAdapter(getActivity(),android.R.layout.simple_list_item_1,runes);
+                                runeAdapter = new RuneAdapter(getActivity(),getActivity().getLayoutInflater(),runes);
                                 lstRune.setAdapter(runeAdapter);
                             }
                             else{

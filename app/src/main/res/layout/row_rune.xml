@@ -5,9 +5,13 @@
     android:layout_height="match_parent">
 
     <TableRow>
+        <ImageView
+            android:id="@+id/row_ImgRune"
+            android:layout_width="70dp"
+            android:layout_height="60dp"/>
         <TextView
             android:id="@+id/row_rune"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
+            android:layout_width="310dp"
+            android:layout_height="60dp" />
     </TableRow>
 </TableLayout>

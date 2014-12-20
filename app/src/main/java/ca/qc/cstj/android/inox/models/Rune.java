@@ -8,34 +8,25 @@ import org.json.JSONObject;
  * Created by 1159099 on 2014-11-04.
  */
 public class Rune {
-    private String href;
     private String type;
     private int nbrRune;
 
-    public Rune(JsonObject jsonObject) {
-        if(jsonObject.has("href")) {
-            href = jsonObject.getAsJsonPrimitive("href").getAsString();
-        }
-        /*if(jsonObject.has("type")) {
-            type = jsonObject.getAsJsonPrimitive("type").getAsString();
-        }*/
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
+    public Rune() {
     }
 
     public String getType() {
         return type;
     }
 
-    public void setTitre(String type) {
+    public void setType(String type) {
         this.type = type;
     }
 
+    public int getNbrRune() {
+        return nbrRune;
+    }
 
+    public void setNbrRune(int nbrRune) {
+        this.nbrRune = nbrRune;
+    }
 }
