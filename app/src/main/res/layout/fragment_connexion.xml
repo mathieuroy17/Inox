@@ -21,15 +21,15 @@
     <Button
         android:id="@+id/buttonCréationDeCompte"
         android:layout_height="60dp"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_marginTop="350dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="210dp"
         android:text="@string/CréationDeCompte"/>
 
     <Button
         android:id="@+id/buttonConnexion"
         android:layout_height="60dp"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_marginTop="350dp"
         android:text="@string/Connexion" />
 

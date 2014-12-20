@@ -1,13 +1,14 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
 
 
 /**
@@ -61,6 +62,22 @@ public class CreationDeCompteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_creation_de_compte, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final Button annuler = (Button)getActivity().findViewById(R.id.buttonAnnuler);
+        annuler.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ConnexionFragment.newInstance(0))
+                        .commit();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -81,8 +81,6 @@ public class ConnexionFragment extends Fragment {
     {
         super.onStart();
 
-
-
         final Button creation = (Button)getActivity().findViewById(R.id.buttonCréationDeCompte);
         creation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
