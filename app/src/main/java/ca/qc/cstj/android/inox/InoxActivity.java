@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import ca.qc.cstj.android.inox.RuneFragment;
+import ca.qc.cstj.android.inox.adapters.ExplorationAdapter;
 import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.Rune;
 
@@ -28,6 +29,7 @@ public class InoxActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         RuneFragment.OnFragmentInteractionListener,
         TroopFragment.OnFragmentInteractionListener,
+        ExplorationFragment.OnFragmentInteractionListener,
         ConnexionFragment.OnFragmentInteractionListener,
         CreationDeCompteFragment.OnFragmentInteractionListener{
 

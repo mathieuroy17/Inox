@@ -22,16 +22,16 @@ public class Exploration {
         if(jsonObject.has("dateExploration")) {
             dateExploration = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateExploration").getAsString());
         }
-        if(jsonObject.has("location"))
+        if(jsonObject.has("Locations"))
         {
-            JsonObject location = jsonObject.getAsJsonObject("location");
-            if(location.has("depart"))
+            JsonObject location = jsonObject.getAsJsonObject("Locations");
+            if(location.has("Depart"))
             {
-                locationDepart = location.getAsJsonPrimitive("depart").getAsString();
+                locationDepart = location.getAsJsonPrimitive("Depart").getAsString();
             }
-            if(location.has("Arriver"))
+            if(location.has("Fin"))
             {
-                locationArriver = location.getAsJsonPrimitive("Arriver").getAsString();
+                locationArriver = location.getAsJsonPrimitive("Fin").getAsString();
             }
         }
     }

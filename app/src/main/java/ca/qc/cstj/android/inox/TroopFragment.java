@@ -1,6 +1,7 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +9,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
@@ -21,9 +22,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 
-import ca.qc.cstj.android.inox.adapters.RuneAdapter;
 import ca.qc.cstj.android.inox.adapters.TroopAdapter;
-import ca.qc.cstj.android.inox.models.Rune;
 import ca.qc.cstj.android.inox.models.Troop;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
@@ -87,8 +86,20 @@ public class TroopFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        lstTroop= (ListView) getActivity().findViewById(R.id.list_troop);
+        lstTroop= (ListView) getActivity().findViewById(R.id.list_troops);
         loadTroops();
+
+        lstTroop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, DetailsTroopFragment.newInstance(troopAdapter.getItem(position).getHref()))
+                        .addToBackStack("");
+                transaction.commit();
+
+            }
+        });
     }
 
     private void loadTroops() {

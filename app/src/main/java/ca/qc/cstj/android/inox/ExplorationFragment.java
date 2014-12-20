@@ -1,6 +1,7 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,9 +9,22 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+
 import ca.qc.cstj.android.inox.adapters.ExplorationAdapter;
+import ca.qc.cstj.android.inox.models.Exploration;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -26,7 +40,7 @@ public class ExplorationFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "section_number";
-    private ListView lstTroop;
+    private ListView lstExploration;
     private ProgressDialog progressDialog;
     private ExplorationAdapter explorationAdapter;
     // TODO: Rename and change types of parameters
@@ -66,6 +80,68 @@ public class ExplorationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_exploration, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        lstExploration= (ListView) getActivity().findViewById(R.id.list_explorations);
+        loadExplorations();
+
+        lstExploration.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, DetailsExplorationFragment.newInstance(explorationAdapter.getItem(position).getHref()))
+                        .addToBackStack("");
+                transaction.commit();
+
+            }
+        });
+    }
+
+    private void loadExplorations() {
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("En Chargement");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        String tmp = new String();
+        tmp = ServicesURI.EXPLORATIONS_SERVICE_URI+"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYXRoIiwiZXhwaXJlcyI6MTQxOTYzMjQ5NDMwNH0.UdvkJ1V-IfPvf7-oMVMSGJoSW49o1qiM6XF7wSBYRU4";
+
+        Ion.with(getActivity())
+                .load(tmp)
+                .progressDialog(progressDialog)
+                .asJsonArray()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonArray> response) {
+
+                        if(response.getHeaders().getResponseCode() == HttpStatus.SC_OK)
+                        {
+                            JsonArray jsonArray= response.getResult();
+                            ArrayList<Exploration> explorations = new ArrayList<Exploration>();
+
+                            for (JsonElement element : jsonArray) {
+
+                                explorations.add(new Exploration(element.getAsJsonObject()));
+                            }
+
+                            explorationAdapter = new ExplorationAdapter(getActivity(),android.R.layout.simple_list_item_1,explorations);
+                            lstExploration.setAdapter(explorationAdapter);
+                        }
+                        else{
+                            //erreur 404
+                        }
+
+                    }
+                });
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
