@@ -64,7 +64,12 @@ public class InoxActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        switch(position) {
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, ConnexionFragment.newInstance(0))
+                .commit();
+
+       /* switch(position) {
             case 0:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TroopFragment.newInstance(0))
@@ -79,13 +84,13 @@ public class InoxActivity extends Activity
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ExplorationFragment.newInstance(2))
                         .commit();
-                break;
+                break;*/
            /* case  4:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ExplorerFragment.newInstance(4))
                         .commit();
                 break;*/
-        }
+       // }
 
     }
 

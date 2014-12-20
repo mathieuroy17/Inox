@@ -5,7 +5,7 @@
     tools:context="ca.qc.cstj.android.inox.ConnexionFragment">
 
     <EditText
-        android:id="@+id/Utilisateur"
+        android:id="@+id/utilisateur"
         android:layout_height="70dp"
         android:layout_width="match_parent"
         android:layout_marginTop="70dp"
@@ -17,13 +17,6 @@
         android:layout_height="70dp"
         android:layout_marginTop="140dp"
         android:hint="@string/MotDePasse"/>
-
-    <EditText
-        android:id="@+id/motDePasseConfirmation"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="210dp"
-        android:hint="@string/MotDePasseConfirmation"/>
 
     <Button
         android:id="@+id/buttonCréationDeCompte"

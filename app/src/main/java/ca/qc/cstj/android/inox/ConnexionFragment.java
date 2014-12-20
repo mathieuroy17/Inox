@@ -1,13 +1,26 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -23,11 +36,9 @@ public class ConnexionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,16 +46,14 @@ public class ConnexionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param position Parameter 1.
      * @return A new instance of fragment ConnexionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ConnexionFragment newInstance(String param1, String param2) {
+    public static ConnexionFragment newInstance(int position) {
         ConnexionFragment fragment = new ConnexionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +66,6 @@ public class ConnexionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -66,6 +74,62 @@ public class ConnexionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_connexion, container, false);
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        final Button button = (Button)getActivity().findViewById(R.id.buttonConnexion);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Connexion en cours");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                //Trouve les informations
+                final EditText editText = (EditText)getActivity().findViewById(R.id.utilisateur);
+                final String nom = editText.getText().toString();
+
+                final EditText textPseudo = (EditText)getActivity().findViewById(R.id.motDePasse);
+                String password = textPseudo.getText().toString();
+
+                StringBuilder href = new StringBuilder();
+                href.append(ServicesURI.EXPLORATEURS_SERVICE_URI).append("?utilisateur=").append(nom).append("&password=").append(password);
+
+                Ion.with(getActivity())
+                        .load(href.toString())
+                        .progressDialog(progressDialog)
+                        .asJsonObject()
+                        .withResponse()
+                        .setCallback(new FutureCallback<Response<JsonObject>>()
+                        {
+                            @Override
+                            public void onCompleted(Exception e, Response<JsonObject> Responce)
+                            {
+
+                                if (Responce.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                                    JsonObject jsonObject=Responce.getResult();
+
+                                    UtilisateurConnecter.setToken(jsonObject.getAsJsonPrimitive("token").getAsString());
+                                    UtilisateurConnecter.setNom(jsonObject.getAsJsonPrimitive("user").getAsString());
+                                    UtilisateurConnecter.setExpiration(jsonObject.getAsJsonPrimitive("expires").getAsInt());
+
+                                    FragmentManager fragmentManager = getFragmentManager();
+
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.container, RuneFragment.newInstance(0))
+                                            .commit();
+                                }
+
+                            }
+                        });
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
