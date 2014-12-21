@@ -13,7 +13,7 @@
     <string name="CréationDeCompte">Creation d\'un compte</string>
     <string name="Utilisateur">Entrer votre nom d\'utilisateur</string>
     <string name="MotDePasse">Entrer votre mot de passe</string>
-    <string name="MotDePasseConfirmation">Entrer à nouveau votre mot de passe</string>
+    <string name="MotDePasseConfirmation">Confirmer votre mot de passe</string>
     <string name="Nom">Entrer votre nom</string>
     <string name="Créer">Créer</string>
     <string name="Annuler">Annuler</string>
