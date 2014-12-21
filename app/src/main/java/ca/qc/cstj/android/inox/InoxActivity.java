@@ -34,7 +34,8 @@ public class InoxActivity extends Activity
         DetailsExplorationFragment.OnFragmentInteractionListener,
         DetailsTroopFragment.OnFragmentInteractionListener,
         ConnexionFragment.OnFragmentInteractionListener,
-        CreationDeCompteFragment.OnFragmentInteractionListener{
+        CreationDeCompteFragment.OnFragmentInteractionListener,
+        ExplorerFragment.OnFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -89,11 +90,11 @@ public class InoxActivity extends Activity
                             .replace(R.id.container, ExplorationFragment.newInstance(2))
                             .commit();
                     break;
-               /* case  4:
+               case  4:
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, ExplorerFragment.newInstance(4))
                             .commit();
-                    break;*/
+                    break;
             }
         }
     }
