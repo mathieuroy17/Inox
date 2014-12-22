@@ -14,7 +14,7 @@ import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class ScannerFragment extends ExplorerFragment implements  ZBarScannerView.ResultHandler {
+public class ScannerFragment extends Fragment implements  ZBarScannerView.ResultHandler {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
 

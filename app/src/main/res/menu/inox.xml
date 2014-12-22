@@ -8,5 +8,5 @@
     <item android:id="@+id/action_deconnexion"
         android:title="déconnexion"
         android:orderInCategory="101"
-        />
+    />
 </menu>
