@@ -1,6 +1,7 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -66,6 +67,12 @@ public class ExplorerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, ScannerFragment.newInstance(0))
+                .commit();
 
 
 
