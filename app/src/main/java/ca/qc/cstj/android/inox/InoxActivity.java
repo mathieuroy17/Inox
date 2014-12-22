@@ -148,11 +148,11 @@ public class InoxActivity extends Activity
         }
         if (id == R.id.action_deconnexion) {
             FragmentManager fragmentManager = getFragmentManager();
-            UtilisateurConnecter.setNom(null);
-            UtilisateurConnecter.setToken(null);
+            UtilisateurConnecter.setNom("");
+            UtilisateurConnecter.setToken("");
             UtilisateurConnecter.setExpiration(0);
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ConnexionFragment.newInstance(3))
+                    .replace(R.id.container, ConnexionFragment.newInstance(0))
                     .commit();
             return true;
         }
