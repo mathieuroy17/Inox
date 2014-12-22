@@ -1,5 +1,7 @@
 package ca.qc.cstj.android.inox;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
     private boolean mFlash;
     private boolean mAutoFocus;
 
+    private OnFragmentInteractionListener mListener;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -37,6 +41,9 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
         return fragment;
     }
 
+    public ScannerFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -109,6 +116,40 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
         mScannerView.stopCamera();
 
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
     }
 
 

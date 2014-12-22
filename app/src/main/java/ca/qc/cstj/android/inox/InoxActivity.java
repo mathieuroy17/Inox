@@ -26,7 +26,8 @@ public class InoxActivity extends Activity
         DetailsTroopFragment.OnFragmentInteractionListener,
         ConnexionFragment.OnFragmentInteractionListener,
         CreationDeCompteFragment.OnFragmentInteractionListener,
-        ExplorerFragment.OnFragmentInteractionListener{
+        ExplorerFragment.OnFragmentInteractionListener,
+        ScannerFragment.OnFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
