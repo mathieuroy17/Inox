@@ -34,8 +34,8 @@ public class ScannerFragment extends Fragment implements  ZBarScannerView.Result
      * @return A new instance of fragment ExplorerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExplorerFragment newInstance() {
-        ExplorerFragment fragment = new ExplorerFragment();
+    public static ScannerFragment newInstance() {
+        ScannerFragment fragment = new ScannerFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
