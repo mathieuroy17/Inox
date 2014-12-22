@@ -2,6 +2,8 @@ package ca.qc.cstj.android.inox.models;
 
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 /**
  * Created by Mathieu on 2014-12-19.
  */
@@ -10,6 +12,8 @@ public class Troop {
     private String href;
     private String imageUrl;
     private String name;
+    private String uuid;
+    private List<Rune> kernel;
     private int attack;
     private int defense;
     private int speed;
@@ -32,6 +36,30 @@ public class Troop {
         }
         if(jsonObject.has("speed")) {
             speed = jsonObject.getAsJsonPrimitive("speed").getAsInt();
+        }
+        if(jsonObject.has("uuid"))
+        {
+            uuid = jsonObject.getAsJsonPrimitive("uuid").getAsString();
+        }
+        if(jsonObject.has("kernel"))
+        {
+            JsonObject JsonObject = jsonObject.getAsJsonObject("kernel");
+
+            int size = JsonObject.entrySet().size();
+            Object object[] = JsonObject.entrySet().toArray();
+
+            for (int i = 0; i < size; i++)
+            {
+                Rune rune = new Rune();
+                String tmp = object[i].toString();
+                int index = tmp.indexOf("=");
+                String type = tmp.substring(0, index);
+                int nbrRune = Integer.parseInt(tmp.substring(index + 1, tmp.length()));
+
+                rune.setType(type);
+                rune.setNbrRune(nbrRune);
+                kernel.add(rune);
+            }
         }
     }
 
@@ -81,5 +109,21 @@ public class Troop {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public List<Rune> getKernel() {
+        return kernel;
+    }
+
+    public void setKernel(List<Rune> kernel) {
+        this.kernel = kernel;
     }
 }

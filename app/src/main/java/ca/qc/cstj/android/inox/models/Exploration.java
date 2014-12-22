@@ -4,6 +4,9 @@ import com.google.gson.JsonObject;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.qc.cstj.android.inox.helpers.DateParser;
 
 /**
@@ -14,6 +17,8 @@ public class Exploration {
     private String locationDepart;
     private String locationArriver;
     private DateTime dateExploration;
+    private Troop troop;
+    private List<Rune> lstRunes;
 
     public Exploration(JsonObject jsonObject) {
         if(jsonObject.has("href")) {
@@ -32,6 +37,30 @@ public class Exploration {
             if(location.has("Fin"))
             {
                 locationArriver = location.getAsJsonPrimitive("Fin").getAsString();
+            }
+        }
+        if(jsonObject.has("troop"))
+        {
+            troop = new Troop(jsonObject.getAsJsonObject("troop"));
+        }
+        if(jsonObject.has("runes"))
+        {
+            JsonObject JsonObject= jsonObject.getAsJsonObject("runes");
+
+            int size= JsonObject.entrySet().size();
+            Object object[]= JsonObject.entrySet().toArray();
+
+            for(int i=0;i<size;i++)
+            {
+                Rune rune = new Rune();
+                String tmp= object[i].toString();
+                int index =tmp.indexOf("=");
+                String type = tmp.substring(0,index);
+                int nbrRune = Integer.parseInt(tmp.substring(index+1,tmp.length()));
+
+                rune.setType(type);
+                rune.setNbrRune(nbrRune);
+                lstRunes.add(rune);
             }
         }
     }
@@ -66,5 +95,21 @@ public class Exploration {
 
     public void setDateExploration(DateTime dateExploration) {
         this.dateExploration = dateExploration;
+    }
+
+    public Troop getTroop() {
+        return troop;
+    }
+
+    public void setTroop(Troop troop) {
+        this.troop = troop;
+    }
+
+    public List<Rune> getLstRunes() {
+        return lstRunes;
+    }
+
+    public void setLstRunes(List<Rune> lstRunes) {
+        this.lstRunes = lstRunes;
     }
 }
