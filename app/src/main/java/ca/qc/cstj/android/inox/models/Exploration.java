@@ -34,10 +34,20 @@ public class Exploration {
             {
                 locationDepart = location.getAsJsonPrimitive("Depart").getAsString();
             }
+            else if(location.has("start"))
+            {
+                locationDepart = location.getAsJsonPrimitive("Depart").getAsString();
+            }
+
             if(location.has("Fin"))
             {
                 locationArriver = location.getAsJsonPrimitive("Fin").getAsString();
             }
+            else if(location.has("end"))
+            {
+                locationDepart = location.getAsJsonPrimitive("end").getAsString();
+            }
+
         }
         if(jsonObject.has("troop"))
         {
