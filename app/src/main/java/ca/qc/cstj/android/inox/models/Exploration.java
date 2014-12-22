@@ -36,7 +36,7 @@ public class Exploration {
             }
             else if(location.has("start"))
             {
-                locationDepart = location.getAsJsonPrimitive("Depart").getAsString();
+                locationDepart = location.getAsJsonPrimitive("start").getAsString();
             }
 
             if(location.has("Fin"))
