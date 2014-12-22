@@ -3,7 +3,6 @@ package ca.qc.cstj.android.inox;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -13,16 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.Response;
-
-import org.apache.http.HttpStatus;
-
-import ca.qc.cstj.android.inox.services.ServicesURI;
 import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
@@ -102,30 +91,10 @@ public class ScannerFragment extends Fragment implements  ZBarScannerView.Result
         FragmentManager fragmentManager = getFragmentManager();
         Log.v(TAG, rawResult.getContents()); // Prints scan results
 
-        StringBuilder href = new StringBuilder();
-        href.append(ServicesURI.PORTAL_SERVICE_URI).append(rawResult.getContents().toString());
-
-        ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Exploration en cours");
-        progressDialog.setIndeterminate(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-        /*Ion.with(getActivity())
-                .load(href.toString())
-                .progressDialog(progressDialog)
-                .asJsonArray()
-                .withResponse()
-                .setCallback(new FutureCallback<Response<JsonArray>>{
-
-
-
-                    }
-                ;*/
+        mScannerView.stopCamera();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, ExplorerFragment.newInstance(3))
+                .replace(R.id.container, ExplorerFragment.newInstance(rawResult.getContents().toString()))
                 .commit();
-
     }
 
 

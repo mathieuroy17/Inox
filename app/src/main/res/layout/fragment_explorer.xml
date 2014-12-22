@@ -4,6 +4,38 @@
     android:layout_height="match_parent"
     tools:context="ca.qc.cstj.android.inox.ExplorerFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/Exploration"/>
+    <TextView
+        android:id="@+id/TroopTrouver"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"/>
+    <TextView
+        android:id="@+id/prix"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"/>
+    <TextView
+        android:id="@+id/runeRecu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="250dp"/>
+    <Button
+        android:id="@+id/buttonAjouter"
+        android:layout_height="60dp"
+        android:layout_width="150dp"
+        android:layout_marginTop="350dp"
+        android:text="@string/Achat"/>
 
+    <Button
+        android:id="@+id/buttonNePasAjouter"
+        android:layout_height="60dp"
+        android:layout_width="150dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="210dp"
+        android:text="@string/PasAchat" />
 
 </FrameLayout>

@@ -1,13 +1,33 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+
+import ca.qc.cstj.android.inox.models.Exploration;
+import ca.qc.cstj.android.inox.models.Fonction;
+import ca.qc.cstj.android.inox.models.Rune;
+import ca.qc.cstj.android.inox.models.Troop;
+import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
+import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
@@ -22,10 +42,10 @@ import android.view.ViewGroup;
 public class ExplorerFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "Cle";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String cle;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,14 +53,14 @@ public class ExplorerFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param position Parameter 1.
+     * @param cle Parameter 1.
      * @return A new instance of fragment ExplorerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExplorerFragment newInstance(int position) {
+    public static ExplorerFragment newInstance(String cle) {
         ExplorerFragment fragment = new ExplorerFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, position);
+        args.putString(ARG_PARAM1, cle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +72,7 @@ public class ExplorerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            cle = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -60,7 +80,10 @@ public class ExplorerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explorer, container, false);
+        final View viewlive =  inflater.inflate(R.layout.fragment_explorer,container, false);
+        loadExplorer(viewlive);
+
+        return  viewlive;
     }
 
     @Override
@@ -69,8 +92,177 @@ public class ExplorerFragment extends Fragment {
 
 
 
-
     }
+
+
+    private void loadExplorer(final View viewlive)
+    {
+
+        StringBuilder href = new StringBuilder();
+        href.append(ServicesURI.PORTAL_SERVICE_URI).append(cle);
+
+        //pour l'Exploration du portal
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Exploration en cours");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        //pour les runes
+        final ProgressDialog progressDialogRune;
+        progressDialogRune = new ProgressDialog(getActivity());
+        progressDialogRune.setMessage("Chargement des runes en cours");
+        progressDialogRune.setIndeterminate(true);
+        progressDialogRune.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        //Pour aller à la liste d'exploration après
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);
+        final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
+
+        Ion.with(getActivity())
+                .load(href.toString())
+                .progressDialog(progressDialog)
+                .asJsonObject()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonObject>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonObject> Response) {
+
+                        if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                            final Exploration exploration = new Exploration(Response.getResult());
+
+                            TextView rune = (TextView) viewlive.findViewById(R.id.runeRecu);
+                            StringBuilder SBRune = new StringBuilder();
+                            if(exploration.getLstRunes().size()>0) {
+                                SBRune.append("rune recu").append(Fonction.RuneToString(exploration.getLstRunes()));
+                            }
+                            else
+                            {
+                                SBRune.append("aucune rune n'ont été trouvé");
+                            }
+
+                            rune.setText(SBRune.toString());
+
+                            if ((exploration.getTroop()).getName() != null) {
+                                StringBuilder hrefRune = new StringBuilder();
+                                hrefRune.append(ServicesURI.RUNES_SERVICE_URI).append("?token=").append(UtilisateurConnecter.getToken());
+
+                                Ion.with(getActivity())
+                                        .load(hrefRune.toString())
+                                        .progressDialog(progressDialogRune)
+                                        .asJsonObject()
+                                        .withResponse()
+                                        .setCallback(new FutureCallback<Response<JsonObject>>() {
+                                            @Override
+                                            public void onCompleted(Exception e, Response<JsonObject> response) {
+
+                                                if (response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                                                    JsonObject JsonObject = response.getResult();
+                                                    boolean assezDeRune;
+
+                                                    ArrayList<Rune> runes = Fonction.FormatRune(JsonObject);
+                                                    assezDeRune = Fonction.EnoughRune((exploration.getTroop().getKernel()), runes);
+
+                                                    if (assezDeRune == true)
+                                                    {
+                                                        //donner choix acheter troop
+                                                        TextView troop = (TextView) viewlive.findViewById(R.id.TroopTrouver);
+                                                        TextView prix = (TextView) viewlive.findViewById(R.id.prix);
+
+                                                        StringBuilder SBTroop= new StringBuilder();
+                                                        SBTroop.append(exploration.getTroop().getName()).append("\n attack: ").append(exploration.getTroop().getAttack()).append("\n defense :")
+                                                                .append(exploration.getTroop().getDefense()).append("\n speed :").append(exploration.getTroop().getSpeed());
+
+                                                        StringBuilder SBCout = new StringBuilder();
+                                                        SBCout.append("Prix :").append(Fonction.RuneToString(exploration.getTroop().getKernel()));
+
+
+
+                                                        troop.setText(SBTroop.toString());
+                                                        prix.setText(SBCout.toString());
+
+                                                        Add.setOnClickListener(new View.OnClickListener() {
+                                                            public void onClick(View v) {
+
+                                                                Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                                            }
+                                                        });
+                                                        dontAdd.setOnClickListener(new View.OnClickListener() {
+                                                            public void onClick(View v) {
+                                                                Troop troop = new Troop();
+                                                                exploration.setTroop(troop);
+                                                                Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                                            }
+                                                        });
+
+
+                                                    }
+                                                    else {
+                                                        Troop troop = new Troop();
+                                                        exploration.setTroop(troop);
+                                                        Add.setOnClickListener(new View.OnClickListener() {
+                                                            public void onClick(View v) {
+                                                                // 1. Instantiate an AlertDialog.Builder with its constructor
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                                                // 2. Chain together various setter methods to set the dialog characteristics
+                                                                builder.setMessage(R.string.dialog_message)
+                                                                        .setTitle(R.string.dialog_title);
+
+                                                                // 3. Get the AlertDialog from create()
+                                                                AlertDialog dialog = builder.create();
+                                                            }
+                                                        });
+                                                        dontAdd.setOnClickListener(new View.OnClickListener() {
+                                                            public void onClick(View v) {
+                                                                Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                                            }
+                                                        });
+                                                    }
+
+                                                } else {
+                                                    //erreur get runes
+                                                }
+                                            }
+                                        });
+                            } else {
+                                TextView troop = (TextView) viewlive.findViewById(R.id.TroopTrouver);
+                                TextView prix = (TextView) viewlive.findViewById(R.id.prix);
+
+                                StringBuilder SBTroop= new StringBuilder();
+                                SBTroop.append("Aucune troop n'a été trouvé");
+
+                                StringBuilder SBCout = new StringBuilder();
+                                SBCout.append("Cout de 0 cliquer sur ajouter pour continuer");
+
+
+
+                                troop.setText(SBTroop.toString());
+                                prix.setText(SBCout.toString());
+
+                                Add.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                    }
+                                });
+                                dontAdd.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                    }
+                                });
+
+                            }
+
+                        } else {
+                            //erreur explorer
+                        }
+                    }
+                });
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

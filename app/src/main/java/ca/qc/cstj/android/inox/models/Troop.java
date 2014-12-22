@@ -2,6 +2,7 @@ package ca.qc.cstj.android.inox.models;
 
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class Troop {
     private String imageUrl;
     private String name;
     private String uuid;
-    private List<Rune> kernel;
+    private ArrayList<Rune> kernel;
     private int attack;
     private int defense;
     private int speed;
@@ -44,25 +45,29 @@ public class Troop {
         if(jsonObject.has("kernel"))
         {
             JsonObject JsonObject = jsonObject.getAsJsonObject("kernel");
-
-            int size = JsonObject.entrySet().size();
-            Object object[] = JsonObject.entrySet().toArray();
-
-            for (int i = 0; i < size; i++)
-            {
-                Rune rune = new Rune();
-                String tmp = object[i].toString();
-                int index = tmp.indexOf("=");
-                String type = tmp.substring(0, index);
-                int nbrRune = Integer.parseInt(tmp.substring(index + 1, tmp.length()));
-
-                rune.setType(type);
-                rune.setNbrRune(nbrRune);
-                kernel.add(rune);
-            }
+            kernel=Fonction.FormatRune(JsonObject);
         }
     }
+    public Troop()
+    {
 
+    }
+
+    public JsonObject getTroopAsJson()
+    {
+        JsonObject jsonObject= new JsonObject();
+        //vérifie si la classe est vide
+        if(name != null) {
+            jsonObject.addProperty("name",name);
+            jsonObject.addProperty("attack",attack);
+            jsonObject.addProperty("defense",defense);
+            jsonObject.addProperty("speed",speed);
+            jsonObject.addProperty("imageUrl",imageUrl);
+            jsonObject.addProperty("uuid",uuid);
+        }
+        return jsonObject;
+
+    }
     public String getHref() {
         return href;
     }
@@ -119,11 +124,12 @@ public class Troop {
         this.uuid = uuid;
     }
 
-    public List<Rune> getKernel() {
+
+    public ArrayList<Rune> getKernel() {
         return kernel;
     }
 
-    public void setKernel(List<Rune> kernel) {
+    public void setKernel(ArrayList<Rune> kernel) {
         this.kernel = kernel;
     }
 }

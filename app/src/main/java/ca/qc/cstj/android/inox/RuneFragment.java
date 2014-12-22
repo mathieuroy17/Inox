@@ -20,6 +20,7 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 
 import ca.qc.cstj.android.inox.adapters.RuneAdapter;
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.Rune;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
@@ -107,24 +108,7 @@ public class RuneFragment extends Fragment {
                             if(response.getHeaders().getResponseCode() == HttpStatus.SC_OK)
                             {
                                 JsonObject JsonObject= response.getResult();
-                                ArrayList<Rune> runes = new ArrayList<Rune>();
-
-                                int size= JsonObject.entrySet().size();
-                                Object object[]= JsonObject.entrySet().toArray();
-
-                               for(int i=0;i<size;i++)
-                                {
-                                    Rune rune = new Rune();
-                                    String tmp= object[i].toString();
-                                    int index =tmp.indexOf("=");
-                                    String type = tmp.substring(0,index);
-                                    int nbrRune = Integer.parseInt(tmp.substring(index+1,tmp.length()));
-
-                                    rune.setType(type);
-                                    rune.setNbrRune(nbrRune);
-                                    runes.add(rune);
-
-                                }
+                                ArrayList<Rune> runes=Fonction.FormatRune(JsonObject);
 
                                 runeAdapter = new RuneAdapter(getActivity(),getActivity().getLayoutInflater(),runes);
                                 lstRune.setAdapter(runeAdapter);

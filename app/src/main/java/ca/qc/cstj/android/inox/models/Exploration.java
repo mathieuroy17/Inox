@@ -18,7 +18,7 @@ public class Exploration {
     private String locationArriver;
     private DateTime dateExploration;
     private Troop troop;
-    private List<Rune> lstRunes;
+    private ArrayList<Rune> lstRunes;
 
     public Exploration(JsonObject jsonObject) {
         if(jsonObject.has("href")) {
@@ -27,23 +27,14 @@ public class Exploration {
         if(jsonObject.has("dateExploration")) {
             dateExploration = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateExploration").getAsString());
         }
-        if(jsonObject.has("Locations"))
+        if(jsonObject.has("locations"))
         {
-            JsonObject location = jsonObject.getAsJsonObject("Locations");
-            if(location.has("Depart"))
-            {
-                locationDepart = location.getAsJsonPrimitive("Depart").getAsString();
-            }
-            else if(location.has("start"))
+            JsonObject location = jsonObject.getAsJsonObject("locations");
+            if(location.has("start"))
             {
                 locationDepart = location.getAsJsonPrimitive("start").getAsString();
             }
-
-            if(location.has("Fin"))
-            {
-                locationArriver = location.getAsJsonPrimitive("Fin").getAsString();
-            }
-            else if(location.has("end"))
+            if(location.has("end"))
             {
                 locationArriver = location.getAsJsonPrimitive("end").getAsString();
             }
@@ -57,22 +48,37 @@ public class Exploration {
         {
             JsonObject JsonObject= jsonObject.getAsJsonObject("runes");
 
-            int size= JsonObject.entrySet().size();
-            Object object[]= JsonObject.entrySet().toArray();
-
-            for(int i=0;i<size;i++)
-            {
-                Rune rune = new Rune();
-                String tmp= object[i].toString();
-                int index =tmp.indexOf("=");
-                String type = tmp.substring(0,index);
-                int nbrRune = Integer.parseInt(tmp.substring(index+1,tmp.length()));
-
-                rune.setType(type);
-                rune.setNbrRune(nbrRune);
-                lstRunes.add(rune);
-            }
+            lstRunes=Fonction.FormatRune(JsonObject);
         }
+    }
+
+    public JsonObject ListRuneToJson()
+    {
+        JsonObject jsonObject = new JsonObject();
+
+        for(Rune element : lstRunes)
+        {
+           jsonObject.addProperty(element.getType(),element.getNbrRune());
+        }
+        return jsonObject;
+    }
+
+    public JsonObject getExplorationAsJson()
+    {
+        JsonObject jsonObject = new JsonObject();
+        JsonObject location = new JsonObject();
+        JsonObject rune = new JsonObject();
+
+        jsonObject.addProperty("dateExploration",dateExploration.toString());
+
+        location.addProperty("start",locationDepart);
+        location.addProperty("end",locationArriver);
+
+        jsonObject.add("locations",location);
+        jsonObject.add("troop",troop.getTroopAsJson());
+        jsonObject.add("runes",ListRuneToJson());
+
+        return jsonObject;
     }
 
     public String getHref() {
@@ -115,11 +121,12 @@ public class Exploration {
         this.troop = troop;
     }
 
-    public List<Rune> getLstRunes() {
+
+    public ArrayList<Rune> getLstRunes() {
         return lstRunes;
     }
 
-    public void setLstRunes(List<Rune> lstRunes) {
+    public void setLstRunes(ArrayList<Rune> lstRunes) {
         this.lstRunes = lstRunes;
     }
 }
