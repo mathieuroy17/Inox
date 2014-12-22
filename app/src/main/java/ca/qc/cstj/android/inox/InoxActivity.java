@@ -146,6 +146,16 @@ public class InoxActivity extends Activity
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_deconnexion) {
+            FragmentManager fragmentManager = getFragmentManager();
+            UtilisateurConnecter.setNom(null);
+            UtilisateurConnecter.setToken(null);
+            UtilisateurConnecter.setExpiration(0);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ConnexionFragment.newInstance(3))
+                    .commit();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

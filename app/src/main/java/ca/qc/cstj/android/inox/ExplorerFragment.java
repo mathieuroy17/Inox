@@ -68,11 +68,6 @@ public class ExplorerFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FragmentManager fragmentManager = getFragmentManager();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, ScannerFragment.newInstance(0))
-                .commit();
 
 
 
