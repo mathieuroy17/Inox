@@ -17,7 +17,7 @@ import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-/*public class ScannerFragment extends Fragment implements  ZBarScannerView.ResultHandler {
+public class ScannerFragment extends Fragment implements  ZBarScannerView.ResultHandler {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
 
@@ -33,7 +33,7 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
      *
      * @return A new instance of fragment ExplorerFragment.
      */
-   /* // TODO: Rename and change types and number of parameters
+    // TODO: Rename and change types and number of parameters
     public static ExplorerFragment newInstance() {
         ExplorerFragment fragment = new ExplorerFragment();
         Bundle args = new Bundle();
@@ -154,43 +154,4 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 
 
-}*/
-
-public class ScannerFragment extends InoxActivity implements ZBarScannerView.ResultHandler {
-    private ZBarScannerView mScannerView;
-    private static final String TAG = "MyActivity";
-
-    public static ExplorerFragment newInstance() {
-        ExplorerFragment fragment = new ExplorerFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle state) {
-        super.onCreate(state);
-        mScannerView = new ZBarScannerView(this);    // Programmatically initialize the scanner view
-        setContentView(mScannerView);                // Set the scanner view as the content view
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        mScannerView.startCamera();          // Start camera on resume
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();           // Stop camera on pause
-    }
-
-    @Override
-    public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v(TAG, rawResult.getContents()); // Prints scan results
-        Log.v(TAG, rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
-    }
 }
