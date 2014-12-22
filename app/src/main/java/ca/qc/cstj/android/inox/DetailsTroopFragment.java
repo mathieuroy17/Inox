@@ -18,10 +18,8 @@ import com.koushikdutta.ion.Response;
 
 import org.apache.http.HttpStatus;
 
-import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.Troop;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
-import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**

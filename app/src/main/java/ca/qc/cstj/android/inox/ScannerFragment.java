@@ -22,6 +22,21 @@ public class ScannerFragment extends Fragment implements  ZBarScannerView.Result
     private boolean mFlash;
     private boolean mAutoFocus;
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment ExplorerFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static ExplorerFragment newInstance() {
+        ExplorerFragment fragment = new ExplorerFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         mScannerView = new ZBarScannerView(getActivity());

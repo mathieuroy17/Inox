@@ -1,7 +1,6 @@
 package ca.qc.cstj.android.inox;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +8,6 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -22,7 +19,6 @@ import org.apache.http.HttpStatus;
 
 import ca.qc.cstj.android.inox.models.Exploration;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
-import ca.qc.cstj.android.inox.services.ServicesURI;
 
 
 /**
