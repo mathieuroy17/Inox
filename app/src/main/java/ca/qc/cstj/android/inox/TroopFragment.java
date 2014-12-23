@@ -139,7 +139,6 @@ public class TroopFragment extends Fragment {
                         }
                         else{
                             //erreur troop
-                            JsonArray JsonArray = response.getResult();
                             JsonObject JsonObject = new JsonObject();
 
                             if(response.getHeaders().getResponseCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
@@ -149,7 +148,8 @@ public class TroopFragment extends Fragment {
                             }
                             else
                             {
-                                JsonObject = JsonArray.getAsJsonObject();
+                                JsonObject.addProperty("status",(response.getHeaders().getResponseCode()));
+                                JsonObject.addProperty("message",response.getHeaders().getResponseMessage());
                             }
                             Fonction.AffichageErreur(getActivity(), JsonObject);
                         }

@@ -217,6 +217,7 @@ public class ExplorerFragment extends Fragment {
 
                                                                 // 3. Get the AlertDialog from create()
                                                                 AlertDialog dialog = builder.create();
+                                                                dialog.show();
                                                             }
                                                         });
                                                         final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);

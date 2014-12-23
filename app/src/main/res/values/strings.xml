@@ -24,11 +24,10 @@
     <string name="troop">Détails d\'une troop</string>
     <string name="name">Nom de la troop</string>
     <string name="stat">Statistique d\'une troop</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Achat">Acheter la troop</string>
     <string name="PasAchat">Ne pas acheter la troop</string>
     <string name="dialog_message">Vous n\'avez pas assez de troop</string>
-    <string name="dialog_title">Réfuser</string>
+    <string name="dialog_title">Refuser</string>
     <string name="error">Erreur lors du chargement</string>
 
 </resources>
