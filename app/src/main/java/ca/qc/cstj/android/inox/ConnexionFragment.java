@@ -140,7 +140,16 @@ public class ConnexionFragment extends Fragment {
                                 }
                                 else
                                 {
-                                    JsonObject JsonObject = Response.getResult();
+                                    JsonObject JsonObject = new JsonObject();
+                                    if(Response.getHeaders().getResponseCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
+
+                                        JsonObject.addProperty("status",503);
+                                        JsonObject.addProperty("message","Service Unavailable");
+                                    }
+                                    else
+                                    {
+                                        JsonObject = Response.getResult();
+                                    }
                                     Fonction.AffichageErreur(getActivity(), JsonObject);
                                 }
 

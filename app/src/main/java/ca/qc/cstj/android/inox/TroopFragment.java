@@ -140,7 +140,17 @@ public class TroopFragment extends Fragment {
                         else{
                             //erreur troop
                             JsonArray JsonArray = response.getResult();
-                            JsonObject JsonObject = JsonArray.getAsJsonObject();
+                            JsonObject JsonObject = new JsonObject();
+
+                            if(response.getHeaders().getResponseCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
+
+                                JsonObject.addProperty("status",503);
+                                JsonObject.addProperty("message","Service Unavailable");
+                            }
+                            else
+                            {
+                                JsonObject = JsonArray.getAsJsonObject();
+                            }
                             Fonction.AffichageErreur(getActivity(), JsonObject);
                         }
 

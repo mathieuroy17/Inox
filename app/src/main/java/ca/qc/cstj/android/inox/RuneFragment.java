@@ -115,7 +115,16 @@ public class RuneFragment extends Fragment {
                             }
                             else{
                                 //erreur runes
-                                JsonObject JsonObject = response.getResult();
+                                JsonObject JsonObject = new JsonObject();
+                                if(response.getHeaders().getResponseCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
+
+                                    JsonObject.addProperty("status",503);
+                                    JsonObject.addProperty("message","Service Unavailable");
+                                }
+                                else
+                                {
+                                    JsonObject = response.getResult();
+                                }
                                 Fonction.AffichageErreur(getActivity(), JsonObject);
                             }
 

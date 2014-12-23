@@ -99,10 +99,10 @@ public class Fonction
 
         StringBuilder error = new StringBuilder();
         error.append("html code :").append(JsonObject.getAsJsonPrimitive("status"))
-                .append("message :").append(JsonObject.getAsJsonPrimitive("message"));
+                .append("\nmessage :").append(JsonObject.getAsJsonPrimitive("message"));
         if(JsonObject.has("developperMessage")) {
 
-            error.append("\nDevelepper message").append(JsonObject.getAsJsonPrimitive("developper"));
+            error.append("\nDevelepper message").append(JsonObject.getAsJsonPrimitive("developperMessage"));
         }
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setMessage(error.toString())
@@ -110,9 +110,10 @@ public class Fonction
 
         // 3. Get the AlertDialog from create()
         AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-   public static void addExploration(Context Activity,Exploration exploration,final FragmentManager fragmentManager)
+   public static void addExploration(final Context Activity,Exploration exploration,final FragmentManager fragmentManager)
    {
        ProgressDialog progressDialog = new ProgressDialog(Activity);
        progressDialog.setMessage("Connexion en cours");
@@ -142,6 +143,17 @@ public class Fonction
                                    .commit();
                        } else {
                            //erreur
+                           JsonObject JsonObject = new JsonObject();
+                           if(Response.getHeaders().getResponseCode() == HttpStatus.SC_SERVICE_UNAVAILABLE) {
+
+                               JsonObject.addProperty("status",503);
+                               JsonObject.addProperty("message","Service Unavailable");
+                           }
+                           else
+                           {
+                               JsonObject = Response.getResult();
+                           }
+                           Fonction.AffichageErreur(Activity, JsonObject);
                        }
 
                    }
