@@ -80,22 +80,22 @@ public class ExplorerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View viewlive =  inflater.inflate(R.layout.fragment_explorer,container, false);
-        loadExplorer(viewlive);
+        return inflater.inflate(R.layout.fragment_explorer,container, false);
 
-        return  viewlive;
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-
+        loadExplorer();
 
     }
 
 
-    private void loadExplorer(final View viewlive)
+    private void loadExplorer()
     {
 
         StringBuilder href = new StringBuilder();
@@ -132,7 +132,7 @@ public class ExplorerFragment extends Fragment {
                         if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
                             final Exploration exploration = new Exploration(Response.getResult());
 
-                            TextView rune = (TextView) viewlive.findViewById(R.id.runeRecu);
+                            TextView rune = (TextView) getActivity().findViewById(R.id.runeRecu);
                             StringBuilder SBRune = new StringBuilder();
                             if(exploration.getLstRunes().size()>0) {
                                 SBRune.append("rune recu\n").append(Fonction.RuneToString(exploration.getLstRunes()));
@@ -167,8 +167,8 @@ public class ExplorerFragment extends Fragment {
                                                     if (assezDeRune == true)
                                                     {
                                                         //donner choix acheter troop
-                                                        TextView troop = (TextView) viewlive.findViewById(R.id.TroopTrouver);
-                                                        TextView prix = (TextView) viewlive.findViewById(R.id.prix);
+                                                        TextView troop = (TextView) getActivity().findViewById(R.id.TroopTrouver);
+                                                        TextView prix = (TextView) getActivity().findViewById(R.id.prix);
 
                                                         StringBuilder SBTroop= new StringBuilder();
                                                         SBTroop.append(exploration.getTroop().getName()).append("\n attack: ").append(exploration.getTroop().getAttack()).append("\n defense :")
@@ -185,7 +185,7 @@ public class ExplorerFragment extends Fragment {
                                                         final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
                                                         Add.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
-
+                                                                exploration.setLstRunes(Fonction.PayRune(exploration.getTroop().getKernel(), exploration.getLstRunes()));
                                                                 Fonction.addExploration(getActivity(), exploration, fragmentManager);
                                                             }
                                                         });
@@ -221,6 +221,7 @@ public class ExplorerFragment extends Fragment {
                                                         dontAdd.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
                                                                 Fonction.addExploration(getActivity(), exploration, fragmentManager);
+                                                                return;
                                                             }
                                                         });
                                                     }
@@ -231,8 +232,8 @@ public class ExplorerFragment extends Fragment {
                                             }
                                         });
                             } else {
-                                TextView troop = (TextView) viewlive.findViewById(R.id.TroopTrouver);
-                                TextView prix = (TextView) viewlive.findViewById(R.id.prix);
+                                TextView troop = (TextView) getActivity().findViewById(R.id.TroopTrouver);
+                                TextView prix = (TextView) getActivity().findViewById(R.id.prix);
 
                                 StringBuilder SBTroop= new StringBuilder();
                                 SBTroop.append("Aucune troop n'a été trouvé");

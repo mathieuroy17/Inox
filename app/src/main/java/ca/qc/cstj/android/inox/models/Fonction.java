@@ -63,6 +63,22 @@ public class Fonction
        }
        return  assezDeRune;
    }
+
+    public static ArrayList<Rune> PayRune(ArrayList<Rune> kernel,ArrayList<Rune> MesRunes)
+    {
+
+        for(Rune element : kernel)
+        {
+            for(Rune rune : MesRunes)
+            {
+                if(rune.getType() == element.getType())
+                {
+                   rune.setNbrRune((element.getNbrRune())*-1);
+                }
+            }
+        }
+        return MesRunes;
+    }
     public static StringBuilder RuneToString(ArrayList<Rune> runes)
     {
         StringBuilder SB = new StringBuilder();
