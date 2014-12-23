@@ -18,6 +18,7 @@ import com.koushikdutta.ion.Response;
 import org.apache.http.HttpStatus;
 
 import ca.qc.cstj.android.inox.models.Exploration;
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 
 
@@ -114,7 +115,9 @@ public class DetailsExplorationFragment extends Fragment {
                         }
                         else
                         {
-
+                            //erreur d'exploration
+                            JsonObject JsonObject = Response.getResult();
+                            Fonction.AffichageErreur(getActivity(), JsonObject);
                         }
                     }
                 });

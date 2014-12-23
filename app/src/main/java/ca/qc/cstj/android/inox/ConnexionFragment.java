@@ -19,6 +19,7 @@ import com.koushikdutta.ion.Response;
 
 import org.apache.http.HttpStatus;
 
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
@@ -136,6 +137,11 @@ public class ConnexionFragment extends Fragment {
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.container, RuneFragment.newInstance(0))
                                             .commit();
+                                }
+                                else
+                                {
+                                    JsonObject JsonObject = Response.getResult();
+                                    Fonction.AffichageErreur(getActivity(), JsonObject);
                                 }
 
                             }

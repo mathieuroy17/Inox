@@ -114,7 +114,9 @@ public class RuneFragment extends Fragment {
                                 lstRune.setAdapter(runeAdapter);
                             }
                             else{
-                                //erreur 404
+                                //erreur runes
+                                JsonObject JsonObject = response.getResult();
+                                Fonction.AffichageErreur(getActivity(), JsonObject);
                             }
 
                         }

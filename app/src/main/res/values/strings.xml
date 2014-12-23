@@ -29,5 +29,6 @@
     <string name="PasAchat">Ne pas acheter la troop</string>
     <string name="dialog_message">Vous n\'avez pas assez de troop</string>
     <string name="dialog_title">Réfuser</string>
+    <string name="error">Erreur lors du chargement</string>
 
 </resources>

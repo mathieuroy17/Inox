@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -129,7 +130,8 @@ public class ExplorerFragment extends Fragment {
                     @Override
                     public void onCompleted(Exception e, Response<JsonObject> Response) {
 
-                        if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
+                        if (Response.getHeaders().getResponseCode() == HttpStatus.SC_OK)
+                        {
                             final Exploration exploration = new Exploration(Response.getResult());
 
                             TextView rune = (TextView) getActivity().findViewById(R.id.runeRecu);
@@ -228,6 +230,8 @@ public class ExplorerFragment extends Fragment {
 
                                                 } else {
                                                     //erreur get runes
+                                                    JsonObject JsonObject = response.getResult();
+                                                    Fonction.AffichageErreur(getActivity(),JsonObject);
                                                 }
                                             }
                                         });
@@ -264,6 +268,8 @@ public class ExplorerFragment extends Fragment {
 
                         } else {
                             //erreur explorer
+                            JsonObject JsonObject = Response.getResult();
+                            Fonction.AffichageErreur(getActivity(),JsonObject);
                         }
                     }
                 });

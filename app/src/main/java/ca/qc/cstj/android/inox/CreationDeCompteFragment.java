@@ -19,6 +19,7 @@ import com.koushikdutta.ion.Response;
 
 import org.apache.http.HttpStatus;
 
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
 
@@ -153,7 +154,9 @@ public class CreationDeCompteFragment extends Fragment {
                                     }
                                     else
                                     {
-
+                                        //erreur de création
+                                        JsonObject JsonObject = Response.getResult();
+                                        Fonction.AffichageErreur(getActivity(), JsonObject);
                                     }
 
                                 }

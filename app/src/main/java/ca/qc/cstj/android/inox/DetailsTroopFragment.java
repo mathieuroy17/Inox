@@ -18,6 +18,7 @@ import com.koushikdutta.ion.Response;
 
 import org.apache.http.HttpStatus;
 
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.Troop;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 
@@ -120,7 +121,9 @@ public class DetailsTroopFragment extends Fragment {
                         }
                         else
                         {
-
+                            //erreur troop
+                            JsonObject JsonObject = Response.getResult();
+                            Fonction.AffichageErreur(getActivity(), JsonObject);
                         }
                     }
                 });

@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
@@ -23,6 +24,7 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 
 import ca.qc.cstj.android.inox.adapters.TroopAdapter;
+import ca.qc.cstj.android.inox.models.Fonction;
 import ca.qc.cstj.android.inox.models.Troop;
 import ca.qc.cstj.android.inox.models.UtilisateurConnecter;
 import ca.qc.cstj.android.inox.services.ServicesURI;
@@ -136,7 +138,10 @@ public class TroopFragment extends Fragment {
                             lstTroop.setAdapter(troopAdapter);
                         }
                         else{
-                            //erreur 404
+                            //erreur troop
+                            JsonArray JsonArray = response.getResult();
+                            JsonObject JsonObject = JsonArray.getAsJsonObject();
+                            Fonction.AffichageErreur(getActivity(), JsonObject);
                         }
 
                     }

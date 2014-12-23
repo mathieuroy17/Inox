@@ -1,5 +1,6 @@
 package ca.qc.cstj.android.inox.models;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -88,6 +89,27 @@ public class Fonction
             SB.append(element.getType()).append(":").append(element.getNbrRune()).append("\n");
         }
         return SB;
+    }
+
+    public static void AffichageErreur(Context Activity,JsonObject JsonObject)
+    {
+        //erreur get runes
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(Activity);
+
+        StringBuilder error = new StringBuilder();
+        error.append("html code :").append(JsonObject.getAsJsonPrimitive("status"))
+                .append("message :").append(JsonObject.getAsJsonPrimitive("message"));
+        if(JsonObject.has("developperMessage")) {
+
+            error.append("\nDevelepper message").append(JsonObject.getAsJsonPrimitive("developper"));
+        }
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage(error.toString())
+                .setTitle(R.string.error);
+
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
     }
 
    public static void addExploration(Context Activity,Exploration exploration,final FragmentManager fragmentManager)
