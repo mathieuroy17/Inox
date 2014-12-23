@@ -118,8 +118,7 @@ public class ExplorerFragment extends Fragment {
         //Pour aller à la liste d'exploration après
         final FragmentManager fragmentManager = getFragmentManager();
 
-        final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);
-        final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
+
 
         Ion.with(getActivity())
                 .load(href.toString())
@@ -136,7 +135,7 @@ public class ExplorerFragment extends Fragment {
                             TextView rune = (TextView) viewlive.findViewById(R.id.runeRecu);
                             StringBuilder SBRune = new StringBuilder();
                             if(exploration.getLstRunes().size()>0) {
-                                SBRune.append("rune recu").append(Fonction.RuneToString(exploration.getLstRunes()));
+                                SBRune.append("rune recu\n").append(Fonction.RuneToString(exploration.getLstRunes()));
                             }
                             else
                             {
@@ -183,12 +182,14 @@ public class ExplorerFragment extends Fragment {
                                                         troop.setText(SBTroop.toString());
                                                         prix.setText(SBCout.toString());
 
+                                                        final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
                                                         Add.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
 
                                                                 Fonction.addExploration(getActivity(), exploration, fragmentManager);
                                                             }
                                                         });
+                                                        final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);
                                                         dontAdd.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
                                                                 Troop troop = new Troop();
@@ -202,6 +203,7 @@ public class ExplorerFragment extends Fragment {
                                                     else {
                                                         Troop troop = new Troop();
                                                         exploration.setTroop(troop);
+                                                        final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
                                                         Add.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
                                                                 // 1. Instantiate an AlertDialog.Builder with its constructor
@@ -215,6 +217,7 @@ public class ExplorerFragment extends Fragment {
                                                                 AlertDialog dialog = builder.create();
                                                             }
                                                         });
+                                                        final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);
                                                         dontAdd.setOnClickListener(new View.OnClickListener() {
                                                             public void onClick(View v) {
                                                                 Fonction.addExploration(getActivity(), exploration, fragmentManager);
@@ -242,11 +245,14 @@ public class ExplorerFragment extends Fragment {
                                 troop.setText(SBTroop.toString());
                                 prix.setText(SBCout.toString());
 
+                                final Button Add = (Button)getActivity().findViewById(R.id.buttonAjouter);
                                 Add.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
                                         Fonction.addExploration(getActivity(), exploration, fragmentManager);
                                     }
                                 });
+
+                                final Button dontAdd = (Button)getActivity().findViewById(R.id.buttonNePasAjouter);
                                 dontAdd.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
                                         Fonction.addExploration(getActivity(), exploration, fragmentManager);
